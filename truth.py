@@ -8,7 +8,7 @@ Submit when you are happy with:    gh student submit
 
 Rules
 - A "formula" in this lab is a Python function that takes booleans and returns a boolean,
-  for example   lambda p, q: implies(p, q) and not q
+  for example    lambda p, q: implies(p, q) and not q
 - Do not change function names or parameters: the autograder calls them by name.
 - You may use the standard library (itertools is especially useful). No other packages.
 """
@@ -23,20 +23,17 @@ from itertools import product
 
 def implies(p: bool, q: bool) -> bool:
     """p → q. False only when p is True and q is False."""
-    # TODO
-    raise NotImplementedError
+    return not p or q
 
 
 def iff(p: bool, q: bool) -> bool:
     """p ↔ q. True when p and q have the same truth value."""
-    # TODO
-    raise NotImplementedError
+    return p == q
 
 
 def xor(p: bool, q: bool) -> bool:
     """p ⊕ q. True when exactly one of p, q is True."""
-    # TODO
-    raise NotImplementedError
+    return p != q
 
 
 # ---------------------------------------------------------------------------
@@ -52,8 +49,7 @@ def rows(n: int) -> list[tuple[bool, ...]]:
     rows(0) == [()]          # one row: the empty assignment
     Hint: itertools.product
     """
-    # TODO
-    raise NotImplementedError
+    return list(product([True, False], repeat=n))
 
 
 # ---------------------------------------------------------------------------
@@ -66,38 +62,32 @@ def truth_table(f, n: int) -> list[tuple[tuple[bool, ...], bool]]:
 
     truth_table(lambda p: not p, 1) == [((True,), False), ((False,), True)]
     """
-    # TODO
-    raise NotImplementedError
+    return [(row, f(*row)) for row in rows(n)]
 
 
 def is_tautology(f, n: int) -> bool:
     """True if f is True in every row."""
-    # TODO
-    raise NotImplementedError
+    return all(f(*row) for row in rows(n))
 
 
 def is_contradiction(f, n: int) -> bool:
     """True if f is False in every row."""
-    # TODO
-    raise NotImplementedError
+    return not any(f(*row) for row in rows(n))
 
 
 def is_satisfiable(f, n: int) -> bool:
     """True if f is True in at least one row."""
-    # TODO
-    raise NotImplementedError
+    return any(f(*row) for row in rows(n))
 
 
 def equivalent(f, g, n: int) -> bool:
     """True if f and g have the same value in every row (f ≡ g)."""
-    # TODO
-    raise NotImplementedError
+    return all(f(*row) == g(*row) for row in rows(n))
 
 
 def count_true(f, n: int) -> int:
     """How many rows make f True?"""
-    # TODO
-    raise NotImplementedError
+    return sum(1 for row in rows(n) if f(*row))
 
 
 # ---------------------------------------------------------------------------
@@ -117,10 +107,18 @@ def format_table(f, names: list[str], label: str = "result") -> str:
         0 1 | 0
         0 0 | 0
 
-    (lines joined with "\\n", no trailing newline, no extra spaces)
+    (lines joined with "\n", no trailing newline, no extra spaces)
     """
-    # TODO
-    raise NotImplementedError
+    header = " ".join(names) + " | " + label
+    lines = [header]
+    
+    n = len(names)
+    for row, res in truth_table(f, n):
+        row_str = " ".join("1" if val else "0" for val in row)
+        res_str = "1" if res else "0"
+        lines.append(f"{row_str} | {res_str}")
+        
+    return "\n".join(lines)
 
 
 # ---------------------------------------------------------------------------
@@ -131,20 +129,17 @@ def format_table(f, names: list[str], label: str = "result") -> str:
 
 def spec1(p: bool, q: bool, r: bool) -> bool:
     """The response is slow only if the server is overloaded and the request is not served from cache."""
-    # TODO
-    raise NotImplementedError
+    return not r or (p and not q)
 
 
 def spec2(p: bool, q: bool, r: bool) -> bool:
     """The request is served from cache unless the server is overloaded."""
-    # TODO
-    raise NotImplementedError
+    return q or p
 
 
 def spec3(p: bool, q: bool, r: bool) -> bool:
     """Neither is the server overloaded nor is the response slow."""
-    # TODO
-    raise NotImplementedError
+    return not p and not r
 
 
 # ---------------------------------------------------------------------------
