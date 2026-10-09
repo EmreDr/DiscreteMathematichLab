@@ -5,8 +5,8 @@ Discrete Mathematics (YMT211) · Fall 2026 · Fırat University
 ## Student
 
 <!-- Fill in both lines, then commit. This is how your work is matched to you. -->
-- Name:
-- Student ID:
+- Name: Muhammed Emre Dere
+- Student ID: 250543015
 
 ## Files
 
