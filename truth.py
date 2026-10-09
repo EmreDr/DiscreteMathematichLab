@@ -1,4 +1,4 @@
-"""
+""" 
 Lab 1 · Truth-Table Engine
 Discrete Mathematics (YMT211) · Fall 2026
 
